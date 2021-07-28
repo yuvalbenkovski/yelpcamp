@@ -3,16 +3,17 @@ const { cloudinary } = require('../cloudinary/index')
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapBoxToken = process.env.MAPBOX_TOKEN
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
+const axios = require('axios')
 
-
-
+//Unsplash Base URL : https://api.unsplash.com/
 module.exports.index = async (req, res) => {
     let campgrounds = await Campground.find({}).limit(20)
     const { search } = req.query
     if (search) {
         campgrounds = await Campground.fuzzySearch(search)
     }
-    res.render('campgrounds/index.ejs', { campgrounds, title: 'All Campgrounds' })
+    res.render('campgrounds/index.ejs', { campgrounds, title: 'All Campgrounds'})
+
 }
 
 module.exports.renderNewForm = (req, res) => {

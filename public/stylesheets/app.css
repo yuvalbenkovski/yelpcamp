@@ -15,15 +15,21 @@
 
 .index-img {
     max-width: 300px;
-    max-height: 300px;
+    max-height: 200px;
+    min-width: 300px;
+    min-height: 200px;
 }
 
-#card-carousel{
+#card-carousel {
     max-width: 630px;
     max-height: 420px;
+    min-width: 630px;
+    min-height: 420px;
 }
 
 #carousel-img {
     max-width: 630px;
     max-height: 420px;
+    min-width: 630px;
+    min-height: 420px;
 }

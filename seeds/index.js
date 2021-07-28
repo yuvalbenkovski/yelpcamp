@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const Campground = require('../models/campground.js')
 const cities = require('./cities')
 const { places, descriptors } = require('./seedHelpers')
+const axios = require('axios')
+const unsplashKey = process.env.UNSPLASH_KEY
 mongoose.connect('mongodb://localhost:27017/yelp-camp', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
     .then(() => {
         console.log('Connected to mongoose !')
@@ -20,21 +22,23 @@ const seedDB = async () => {
     for (let i = 0; i < 300; i++) {
         const rand1000 = Math.floor(Math.random() * 1000)
         const price = Math.floor(Math.random() * 20) + 10;
+        const collectionData = await axios.get(`https://api.unsplash.com//collections/2029045/photos?client_id=${unsplashKey}&per_page=30`)
+        const imageUrls = collectionData.data.map(c => c.urls.full)
         const camp = new Campground({
             title: `${sample(descriptors)} ${sample(places)}`,
             location: `${cities[rand1000].city}, ${cities[rand1000].state}`,
             images: [
                 {
-                    url: 'https://res.cloudinary.com/dsutpkolh/image/upload/v1624909407/YelpCamp/stkdchq9qcgvwssbhgmf.jpg',
-                    filename: 'YelpCamp/stkdchq9qcgvwssbhgmf'
+                    url: imageUrls[Math.floor(Math.random() * 30)],
+                    /* filename: 'YelpCamp/stkdchq9qcgvwssbhgmf' */
                 },
                 {
-                    url: 'https://res.cloudinary.com/dsutpkolh/image/upload/v1624909422/YelpCamp/dzg25hmp3p4gwnprdjka.jpg',
-                    filename: 'YelpCamp/dzg25hmp3p4gwnprdjka'
+                    url: imageUrls[Math.floor(Math.random() * 30)],
+                    /* filename: 'YelpCamp/dzg25hmp3p4gwnprdjka' */
                 },
                 {
-                    url: 'https://res.cloudinary.com/dsutpkolh/image/upload/v1624909434/YelpCamp/ewk1poc5qfyavecqmfil.jpg',
-                    filename: 'YelpCamp/ewk1poc5qfyavecqmfil'
+                    url: imageUrls[Math.floor(Math.random() * 30)],
+                    /* filename: 'YelpCamp/ewk1poc5qfyavecqmfil' */
                 }
             ],
             geometry: {
